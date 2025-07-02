@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  api:
+    # Nome do container para facilitar a identificação
+    container_name: gcp_api
+    # Constrói a imagem a partir do Dockerfile no diretório atual
+    build: .
+    # Mapeia a porta 8000 do host para a porta 8000 do container
+    ports:
+      - "8000:8000"
+    # Monta o diretório atual no container para live-reloading
+    # O arquivo do banco de dados (escola.db) também será criado no seu diretório local
+    volumes:
+      - .:/app
+    # Sobrescreve o CMD do Dockerfile para habilitar o --reload para desenvolvimento
+    command: [ "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload" ]
